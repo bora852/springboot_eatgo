@@ -1,11 +1,9 @@
 package kr.co.bora.eatgo.application;
 
-import kr.co.bora.eatgo.domain.MenuItem;
-import kr.co.bora.eatgo.domain.MenuItemRepository;
-import kr.co.bora.eatgo.domain.Restaurant;
-import kr.co.bora.eatgo.domain.RestaurantRepository;
+import kr.co.bora.eatgo.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,14 +23,26 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurant(Long id){
-        Restaurant restaurant = restaurantRepository.findById(id);
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
+
         List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
         restaurant.setMenuItems(menuItems);
 
-        return restaurantRepository.findById(id);
+        return restaurant;
     }
 
     public Restaurant addRestaurant(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
+    }
+
+    @Transactional
+    public Restaurant updateRestaurant(long id, String name, String address) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
+
+        restaurant.updateInformation(name, address);
+
+        return restaurant;
     }
 }
