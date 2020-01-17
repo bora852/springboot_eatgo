@@ -2,11 +2,9 @@ package kr.co.bora.eatgo.application;
 
 import kr.co.bora.eatgo.domain.MenuItem;
 import kr.co.bora.eatgo.domain.MenuItemRepository;
-import kr.co.bora.eatgo.domain.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,9 +30,5 @@ public class MenuItemService {
         }
         menuItem.setRestaurantId(restaurantId);
         menuItemRepository.save(menuItem);
-    }
-
-    public List<MenuItem> getMenuItems(long restaurantId) {
-        return menuItemRepository.findAllByRestaurantId(restaurantId);
     }
 }
