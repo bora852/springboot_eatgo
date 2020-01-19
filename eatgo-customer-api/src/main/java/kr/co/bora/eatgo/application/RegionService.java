@@ -5,7 +5,6 @@ import kr.co.bora.eatgo.domain.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,14 +21,5 @@ public class RegionService {
         List<Region> regions = regionRepository.findAll();
         regions.add(Region.builder().name("Seoul").build());
         return regions;
-    }
-
-    public Region addRegion(String name) {
-        Region region = Region.builder().name(name).build();
-
-        regionRepository.save(region);
-
-        return region;
-
     }
 }
