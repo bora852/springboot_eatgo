@@ -1,6 +1,7 @@
 package kr.co.bora.eatgo.interfaces;
 
-import kr.co.bora.eatgo.application.RegionService;
+import kr.co.bora.eatgo.application.CategoryService;
+import kr.co.bora.eatgo.domain.Category;
 import kr.co.bora.eatgo.domain.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,40 +23,40 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(CategoryController.class)
 @RunWith(SpringRunner.class)
-@WebMvcTest(RegionController.class)
-public class RegionControllerTest {
+public class CategoryControllerTest {
 
     @Autowired
     MockMvc mvc;
 
     @MockBean
-    private RegionService regionService;
+    private CategoryService categoryService;
 
     @Test
     public void list() throws Exception {
-        List<Region> regions = new ArrayList<>();
-        regions.add(Region.builder().name("Seoul").build());
+        List<Category> categories = new ArrayList<>();
+        categories.add(Category.builder().name("Korea Food").build());
 
-        given(regionService.getRegions()).willReturn(regions);
+        given(categoryService.getCategories()).willReturn(categories);
 
-        mvc.perform(get("/regions"))
+        mvc.perform(get("/categories"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Seoul")));
+                .andExpect(content().string(containsString("Korea Food")));
     }
 
     @Test
     public void create() throws Exception {
-        Region region = Region.builder().name("Seoul").build();
+        Category category = Category.builder().name("Korea Food").build();
 
-        given(regionService.addRegion("Seoul")).willReturn(region);
+        given(categoryService.addCategory("Korea Food")).willReturn(category);
 
-        mvc.perform(post("/regions")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"name\":\"Seoul\"}"))
-            .andExpect(status().isCreated())
-            .andExpect(content().string("{}"));
+        mvc.perform(post("/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"name\":\"Korea Food\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{}"));
 
-            verify(regionService).addRegion("Seoul");
+        verify(categoryService).addCategory("Korea Food");
     }
 }

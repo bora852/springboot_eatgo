@@ -2,7 +2,6 @@ package kr.co.bora.eatgo.application;
 
 import kr.co.bora.eatgo.domain.Category;
 import kr.co.bora.eatgo.domain.CategoryRepository;
-import kr.co.bora.eatgo.domain.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +21,5 @@ public class CategoryService {
         List<Category> categories = categoryRepository.findAll();
 
         return categories;
-    }
-
-    public Category addCategory(String name) {
-        Category category = Category.builder().name(name).build();
-
-        categoryRepository.save(category);
-
-        return category;
-
     }
 }

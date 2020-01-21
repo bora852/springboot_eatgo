@@ -10,7 +10,6 @@ spring:
 ---
 
 spring:
+  profiles: test
   datasource:
     url: jdbc:h2:mem:test
-  profiles:
-    active: test
