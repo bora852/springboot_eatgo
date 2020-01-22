@@ -24,4 +24,17 @@ public class UserTest {
         assertThat(user.isActive(), is(false));
     }
 
+//    @Test
+//    public void assessTokenWithPassword() {
+//        User user = User.builder().password("ACCESSTOKEN").build();
+//
+//        assertThat(user.getAccessToken(), is("ACCESSTOKE"));
+//    }
+//
+//    @Test
+//    public void assessTokenWithoutPassword() {
+//        User user = new User();
+//
+//        assertThat(user.getAccessToken(), is(""));
+//    }
 }

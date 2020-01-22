@@ -41,6 +41,7 @@ public class ReviewContorllerTest {
         );
 
         mvc.perform(post("/restaurants/1/reviews")
+//                .header("Authorization:Bearer" + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"JOKER\",\"score\":3,\"description\":\"Mat-it-da\"}"))
                 .andExpect(status().isCreated())
