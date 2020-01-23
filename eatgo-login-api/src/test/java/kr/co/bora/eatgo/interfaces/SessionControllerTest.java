@@ -4,6 +4,7 @@ import kr.co.bora.eatgo.application.EmailNotExistedException;
 import kr.co.bora.eatgo.application.PasswordWrongException;
 import kr.co.bora.eatgo.application.UserService;
 import kr.co.bora.eatgo.domain.User;
+import kr.co.bora.eatgo.interfaces.SessionController;
 import kr.co.bora.eatgo.utils.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;

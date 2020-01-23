@@ -34,29 +34,44 @@ public class UserServiceTest {
         userService = new UserService(userRepository, passwordEncoder);
     }
 
-
     @Test
-    public void registerUser() {
+    public void authenticateWithValidAttributes() {
         String email = "tester@example.com";
-        String name = "Tester";
         String password = "test";
 
-        userService.registerUser(email, name, password);
+        User mockUser = User.builder().email(email).build();
 
-        verify(userRepository).save(any());
+        given(userRepository.findByEmail(email)).willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(true);
+
+        User user = userService.authenticate(email, password);
+
+        assertThat(user.getEmail(), is(email));
     }
 
-    @Test(expected = EmailExistedException.class)
-    public void registerUserWithExistedEmail() {
+    @Test(expected = EmailNotExistedException.class)
+    public void authenticateWithNotExistedEmail() {
         String email = "tester@example.com";
-        String name = "Tester";
         String password = "test";
 
-        User user = User.builder().build();
-        given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
+        given(userRepository.findByEmail(email)).willReturn(Optional.empty());
 
-        userService.registerUser(email, name, password);
+        User user = userService.authenticate(email, password);
+    }
 
-        verify(userRepository, never()).save(any());
+    @Test(expected = PasswordWrongException.class)
+    public void authenticateWithWrongPassword() {
+        String email = "tester@example.com";
+        String password = "x";
+
+        User mockUser = User.builder().email(email).build();
+
+        given(userRepository.findByEmail(email))
+                .willReturn(Optional.of(mockUser));
+
+        given(passwordEncoder.matches(any(), any())).willReturn(false);
+
+        User user = userService.authenticate(email, password);
     }
 }
