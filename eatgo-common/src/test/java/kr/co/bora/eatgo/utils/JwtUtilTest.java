@@ -1,11 +1,8 @@
 package kr.co.bora.eatgo.utils;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.security.Keys;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.security.Key;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.Is.is;
@@ -24,7 +21,7 @@ public class JwtUtilTest {
 
     @Test
     public void createToken() {
-        String token = jwtUtil.createToken(1004L, "John");
+        String token = jwtUtil.createToken(1004L, "John", null);
 
         assertThat(token, containsString("."));
     }
